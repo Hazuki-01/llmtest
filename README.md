@@ -1,5 +1,3 @@
-# PyLLMTest 🚀
-
 **The Most Comprehensive LLM Testing Framework for Python**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -443,9 +441,6 @@ Check out the `examples/` directory for:
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -456,11 +451,15 @@ Special thanks to:
 - Anthropic for Claude
 - The Python testing community
 
+**Rahul Malik**
+- Email: rm324556@gmail.com
+- GitHub: [@RahulMK22](https://github.com/RahulMK22)
+- LinkedIn:(https://www.linkedin.com/in/rahul-malik-b0791a1a7/)
+
+
 ## 📞 Support
 
-- 📧 Email: support@pyllmtest.dev
-- 💬 Discord: [Join our community](https://discord.gg/pyllmtest)
-- 📖 Docs: [docs.pyllmtest.dev](https://docs.pyllmtest.dev)
+- 📧 Email: rm324556@gmail.com
 - 🐛 Issues: [GitHub Issues](https://github.com/yourusername/pyllmtest/issues)
 
 ## ⭐ Star History
@@ -469,6 +468,14 @@ If you find PyLLMTest useful, please consider giving it a star on GitHub!
 
 ---
 
-**Made with 🚀 by developers, for developers**
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2024 Rahul Malik
+
+---
+
+**Made with 🚀 by Rahul Malik**
 
 *Making LLM testing as easy as it should be.*
