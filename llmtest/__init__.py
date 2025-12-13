@@ -15,7 +15,7 @@ License: MIT
 Version: 1.0.0
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __author__ = "Rahul Malik"
 
 from llmtest.core.test_runner import LLMTest, llm_test
